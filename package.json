@@ -21,6 +21,9 @@
     "bundle-report": "cross-env ANALYZE=true next build",
     "build-all-in-dev": "cross-env VERCEL_ENV=production next build"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
