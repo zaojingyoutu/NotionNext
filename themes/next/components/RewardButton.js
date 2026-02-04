@@ -21,8 +21,8 @@ const RewardButton = () => {
       </div>
 
       <div onMouseEnter={openPopover} onMouseLeave={closePopover} id='reward-qrcode' className='hidden flex space-x-10 animate__animated animate__fadeIn duration-200 my-5 px-5 mx-auto py-6 justify-center bg-white dark:bg-black dark:text-gray-200'>
-           <div className='w-80'><Image width='auto' height='auto' layout='responsive' objectFit='fill' src='/reward_code_alipay.png' /></div>
-           <div className='w-80'><Image width='auto' height='auto' layout='responsive' objectFit='fill' src='/reward_code_wechat.png' /></div>
+           <div className='w-80'><Image width='auto' height='auto' layout='responsive' objectFit='fill' src='/reward_code_alipay.jpg' /></div>
+           <div className='w-80'><Image width='auto' height='auto' layout='responsive' objectFit='fill' src='/reward_code_wechat.jpg' /></div>
       </div>
     </div>
   )
