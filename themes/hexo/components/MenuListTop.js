@@ -37,15 +37,16 @@ export const MenuListTop = props => {
     links = links.concat(customNav)
   }
 
+  // 开启自定义菜单且 Notion 中有 Menu/SubMenu 类型数据时，完全使用 Notion 菜单（不再使用写死的首页/搜索/归档）
+  const useCustomMenu = siteConfig('CUSTOM_MENU') && Array.isArray(customMenu) && customMenu.length > 0
+  if (useCustomMenu) {
+    links = customMenu
+  }
+
   for (let i = 0; i < links.length; i++) {
     if (links[i].id !== i) {
       links[i].id = i
     }
-  }
-
-  // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (siteConfig('CUSTOM_MENU')) {
-    links = customMenu
   }
 
   if (!links || links.length === 0) {

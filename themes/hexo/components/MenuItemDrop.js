@@ -22,7 +22,7 @@ export const MenuItemDrop = ({ link }) => {
           href={link?.href}
           target={link?.target}
           className=' menu-link pl-2 pr-4 no-underline tracking-widest pb-1'>
-          {link?.icon && <i className={link?.icon} />} {link?.name}
+          {link?.icon && <i className={link?.icon} />} {link?.name ?? link?.title}
           {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
         </SmartLink>
       )}
@@ -30,7 +30,7 @@ export const MenuItemDrop = ({ link }) => {
       {hasSubMenu && (
         <>
           <div className='cursor-pointer menu-link pl-2 pr-4 no-underline tracking-widest pb-1 relative'>
-            {link?.icon && <i className={link?.icon} />} {link?.name}
+            {link?.icon && <i className={link?.icon} />} {link?.name ?? link?.title}
             <i
               className={`px-2 fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i>
             {/* 主菜单下方的安全区域 */}
@@ -53,8 +53,8 @@ export const MenuItemDrop = ({ link }) => {
                 className='cursor-pointer hover:bg-indigo-500 hover:text-white tracking-widest transition-all duration-200 dark:border-gray-800  py-1 pr-6 pl-3'>
                 <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>
-                    {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                    {sLink.title}
+                    {sLink?.icon && <i className={sLink?.icon}> &nbsp; </i>}
+                    {sLink?.name ?? sLink?.title}
                   </span>
                 </SmartLink>
               </li>
