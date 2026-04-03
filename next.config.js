@@ -279,6 +279,15 @@ const nextConfig = {
 
     if (!isServer) {
       console.log('[默认主题]', path.resolve(__dirname, 'themes', THEME))
+      // ioredis 仅用于 Node，避免客户端打包 net/tls/dns
+      config.resolve.fallback = {
+        ...(config.resolve.fallback || {}),
+        net: false,
+        tls: false,
+        dns: false,
+        fs: false,
+        child_process: false
+      }
     }
     config.resolve.alias['@theme-components'] = path.resolve(
       __dirname,
