@@ -18,7 +18,9 @@ export class RateLimiter {
 
   constructor(
     private maxRequestsPerMinute = 200,
-    private lockFilePath?: string
+    private lockFilePath?: string,
+    /** 两次请求之间的最小间隔（ms），构建期宜调大以降低 429 */
+    private minRequestIntervalMs = 300
   ) { }
 
   private async acquireLock() {
@@ -88,7 +90,7 @@ export class RateLimiter {
         this.windowStart = Date.now()
       }
 
-      const minInterval = 300
+      const minInterval = this.minRequestIntervalMs
       const waitTime = Math.max(0, minInterval - (now - this.lastRequestTime))
       if (waitTime > 0) await new Promise(res => setTimeout(res, waitTime))
 

@@ -47,6 +47,8 @@ export async function getStaticProps({ locale }) {
   props.posts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+  // 避免与 posts 重复序列化，显著减小 /search 的 __NEXT_DATA__ 体积（缓解 128kB 告警）
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT
