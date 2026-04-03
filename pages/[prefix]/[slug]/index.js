@@ -2,6 +2,10 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import Slug from '..'
+import {
+  minimalStaticPathsResult,
+  shouldMinimalStaticPathsBuild
+} from '@/lib/utils/minimalStaticPaths'
 import { checkSlugHasOneSlash } from '@/lib/utils/post'
 
 /**
@@ -20,6 +24,10 @@ export async function getStaticPaths() {
       paths: [],
       fallback: true
     }
+  }
+
+  if (shouldMinimalStaticPathsBuild()) {
+    return minimalStaticPathsResult()
   }
 
   const from = 'slug-paths'

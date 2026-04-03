@@ -6,6 +6,10 @@ import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import { useGlobal } from '@/lib/global'
 import { getPageTableOfContents } from '@/lib/db/notion/getPageTableOfContents'
 import { getPasswordQuery } from '@/lib/utils/password'
+import {
+  minimalStaticPathsResult,
+  shouldMinimalStaticPathsBuild
+} from '@/lib/utils/minimalStaticPaths'
 import { checkSlugHasMorThanTwoSlash, checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
@@ -101,6 +105,10 @@ export async function getStaticPaths() {
       paths: [],
       fallback: true
     }
+  }
+
+  if (shouldMinimalStaticPathsBuild()) {
+    return minimalStaticPathsResult()
   }
 
   const from = 'slug-paths'

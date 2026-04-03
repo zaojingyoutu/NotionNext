@@ -1,6 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import {
+  minimalStaticPathsResult,
+  shouldMinimalStaticPathsBuild
+} from '@/lib/utils/minimalStaticPaths'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -49,6 +53,10 @@ export async function getStaticProps({ params: { category, page } }) {
 }
 
 export async function getStaticPaths() {
+  if (shouldMinimalStaticPathsBuild()) {
+    return minimalStaticPathsResult()
+  }
+
   const from = 'category-paths'
   const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({
     from

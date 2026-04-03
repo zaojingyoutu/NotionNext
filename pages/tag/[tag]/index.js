@@ -1,6 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import {
+  minimalStaticPathsResult,
+  shouldMinimalStaticPathsBuild
+} from '@/lib/utils/minimalStaticPaths'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -63,6 +67,10 @@ function getTagNames(tags) {
 }
 
 export async function getStaticPaths() {
+  if (shouldMinimalStaticPathsBuild()) {
+    return minimalStaticPathsResult()
+  }
+
   const from = 'tag-static-path'
   const { tagOptions } = await fetchGlobalAllData({ from })
   const tagNames = getTagNames(tagOptions)

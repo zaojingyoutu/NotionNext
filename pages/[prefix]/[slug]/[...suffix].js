@@ -1,6 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
+import {
+  minimalStaticPathsResult,
+  shouldMinimalStaticPathsBuild
+} from '@/lib/utils/minimalStaticPaths'
 import { checkSlugHasMorThanTwoSlash, processPostData } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
@@ -25,6 +29,10 @@ export async function getStaticPaths() {
       paths: [],
       fallback: true
     }
+  }
+
+  if (shouldMinimalStaticPathsBuild()) {
+    return minimalStaticPathsResult()
   }
 
   const from = 'slug-paths'

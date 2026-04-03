@@ -1,6 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, getPostBlocks } from '@/lib/db/SiteDataApi'
+import {
+  minimalStaticPathsResult,
+  shouldMinimalStaticPathsBuild
+} from '@/lib/utils/minimalStaticPaths'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -14,6 +18,10 @@ const Page = props => {
 }
 
 export async function getStaticPaths({ locale }) {
+  if (shouldMinimalStaticPathsBuild()) {
+    return minimalStaticPathsResult()
+  }
+
   const from = 'page-paths'
   const { postCount, NOTION_CONFIG } = await fetchGlobalAllData({ from, locale })
   const totalPages = Math.ceil(

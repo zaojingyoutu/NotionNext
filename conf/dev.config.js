@@ -16,6 +16,14 @@ module.exports = {
     process.env.npm_lifecycle_event === 'build' ||
     process.env.npm_lifecycle_event === 'export', // 在打包过程中默认开启缓存，开发或运行时开启此功能意义不大。
   isProd: process.env.VERCEL_ENV === 'production' || process.env.EXPORT, // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+
+  /**
+   * 构建时跳过预生成大量动态路径，改为首次访问时再生成（ISR），缩短部署时间、减轻 Notion 429。
+   * Vercel / CI 设置环境变量 NEXT_BUILD_MINIMAL_STATIC_PATHS=true 即可。
+   * 注意：若使用 next export（纯静态导出），ISR 不可用，请勿依赖本项。
+   */
+  MINIMAL_STATIC_PATHS_BUILD:
+    process.env.NEXT_BUILD_MINIMAL_STATIC_PATHS === 'true',
   BUNDLE_ANALYZER: process.env.ANALYZE === 'true' || false, // 是否展示编译依赖内容与大小
   VERSION: (() => {
     try {

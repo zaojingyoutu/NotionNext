@@ -1,5 +1,11 @@
 # 修改记录
 
+## 2025-02-11 按需 ISR：先部署成功，页面随后访问再生成
+
+- **conf/dev.config.js**：`MINIMAL_STATIC_PATHS_BUILD`（`NEXT_BUILD_MINIMAL_STATIC_PATHS=true`）。
+- **lib/utils/minimalStaticPaths.js**：`{ paths: [], fallback: 'blocking' }`。
+- **pages**：`[prefix]`、`[prefix]/[slug]`、`[prefix]/[slug]/[...suffix]`、`tag/*`、`category/*`、`page/[page]` 的 `getStaticPaths` 在开启时跳过预生成；首次访问再走 `getStaticProps`。纯 `next export` 不支持 ISR。
+
 ## 2025-02-11 Vercel 构建 `ReferenceError: ids is not defined`（slug-paths）
 
 - **lib/db/notion/getPostBlocks.js** `fetchInBatches`：不再对参数 `ids` 重新赋值，改为局部变量 `blockIds`；空输入直接返回 `{}`；日志使用 `batch.length`，避免部分打包/严格模式下的边界问题。
