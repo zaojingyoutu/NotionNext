@@ -81,6 +81,8 @@ function scanSubdirectories(directory) {
  */
 
 const nextConfig = {
+  // Next.js 16 默认使用 Turbopack，项目有 webpack 配置时需声明空 turbopack 以消除报错（仍使用 webpack 可运行 npm run dev -- --webpack）
+  turbopack: {},
   eslint: {
     ignoreDuringBuilds: true
   },
