@@ -7,6 +7,9 @@ export const MenuListTop = props => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
+  const configMenuLinks = siteConfig('HEXO_MENU_LINKS', null, CONFIG)
+  const useConfigMenu = Array.isArray(configMenuLinks) && configMenuLinks.length > 0
+
   let links = [
     {
       id: 1,
@@ -29,17 +32,17 @@ export const MenuListTop = props => {
       href: '/archive',
       show: siteConfig('HEXO_MENU_ARCHIVE', null, CONFIG)
     }
-    // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, href: '/category', show: siteConfig('MENU_CATEGORY', null, CONFIG) },
-    // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, href: '/tag', show: siteConfig('MENU_TAG', null, CONFIG) }
   ]
 
   if (customNav) {
     links = links.concat(customNav)
   }
 
-  // 开启自定义菜单且 Notion 中有 Menu/SubMenu 类型数据时，完全使用 Notion 菜单（不再使用写死的首页/搜索/归档）
-  const useCustomMenu = siteConfig('CUSTOM_MENU') && Array.isArray(customMenu) && customMenu.length > 0
-  if (useCustomMenu) {
+  const useNotionMenu = siteConfig('CUSTOM_MENU') && Array.isArray(customMenu) && customMenu.length > 0
+
+  if (useConfigMenu) {
+    links = configMenuLinks.map((item, i) => ({ ...item, id: i, show: item.show !== false }))
+  } else if (useNotionMenu) {
     links = customMenu
   }
 

@@ -11,6 +11,9 @@ export const MenuListSide = props => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
+  const configMenuLinks = siteConfig('HEXO_MENU_LINKS', null, CONFIG)
+  const useConfigMenu = Array.isArray(configMenuLinks) && configMenuLinks.length > 0
+
   let links = [
     {
       icon: 'fas fa-archive',
@@ -42,15 +45,18 @@ export const MenuListSide = props => {
     links = customNav.concat(links)
   }
 
+  const useNotionMenu = siteConfig('CUSTOM_MENU') && Array.isArray(customMenu) && customMenu.length > 0
+
+  if (useConfigMenu) {
+    links = configMenuLinks.map((item, i) => ({ ...item, id: i, show: item.show !== false }))
+  } else if (useNotionMenu) {
+    links = customMenu
+  }
+
   for (let i = 0; i < links.length; i++) {
     if (links[i].id !== i) {
       links[i].id = i
     }
-  }
-
-  // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (siteConfig('CUSTOM_MENU')) {
-    links = customMenu
   }
 
   if (!links || links.length === 0) {

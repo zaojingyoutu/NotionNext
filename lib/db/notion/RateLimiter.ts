@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto'
 import fs from 'fs'
 import path from 'path'
 
@@ -92,7 +93,7 @@ export class RateLimiter {
       if (waitTime > 0) await new Promise(res => setTimeout(res, waitTime))
 
       const { requestFunc, resolve, reject } = this.queue.shift()!
-      const key = crypto.randomUUID()
+      const key = randomUUID()
       this.inflight.add(key)
 
       try {

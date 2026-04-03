@@ -15,7 +15,15 @@ const CONFIG = {
   HEXO_SHOW_START_READING: true,
 
   // 菜单配置
-  HEXO_MENU_INDEX: true, // 显示首页
+  // 若配置了 HEXO_MENU_LINKS 数组，则完全使用该菜单（不依赖 Notion Menu 类型）
+  HEXO_MENU_LINKS: [
+    { name: '首页', href: '/', icon: 'fa-solid fa-house', show: true },
+    { name: '友情链接', href: '/link', icon: 'fa-solid fa-link', show: true },
+    { name: '往期整理', href: '/archive', icon: 'fas fa-archive', show: true },
+    { name: '关于我', href: '/about', icon: 'fa-solid fa-user', show: true },
+    { name: '留言板', href: '/message', icon: 'fa-solid fa-comment', show: true }
+  ],
+  HEXO_MENU_INDEX: true, // 显示首页（仅当未使用 HEXO_MENU_LINKS 时有效）
   HEXO_MENU_CATEGORY: true, // 显示分类
   HEXO_MENU_TAG: true, // 显示标签
   HEXO_MENU_ARCHIVE: true, // 显示归档
